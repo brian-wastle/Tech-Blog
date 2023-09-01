@@ -1,11 +1,9 @@
-// Here is where we set up our Dish model, for when we are ready to connect to a database in future activities.
-
 const { Model, DataTypes } = require('sequelize');
 const sequelize = require('../config/connection');
 
-class Dish extends Model {}
+class Blog extends Model {}
 
-Dish.init(
+Blog.init(
   {
     id: {
       type: DataTypes.INTEGER,
@@ -13,28 +11,37 @@ Dish.init(
       primaryKey: true,
       autoIncrement: true,
     },
-    dish_name: {
+    name: {
       type: DataTypes.STRING,
       allowNull: false,
     },
     description: {
-      type: DataTypes.TEXT,
-      allowNull: true,
-    },
-    guest_name: {
       type: DataTypes.STRING,
+    },
+    date_created: {
+      type: DataTypes.DATE,
+      allowNull: false,
+      defaultValue: DataTypes.NOW,
+    },
+    needed_funding: {
+      type: DataTypes.FLOAT,
       allowNull: false,
     },
-    has_nuts: {
-      type: DataTypes.BOOLEAN,
+    user_id: {
+      type: DataTypes.INTEGER,
+      references: {
+        model: 'user',
+        key: 'id',
+      },
     },
   },
   {
     sequelize,
+    timestamps: false,
     freezeTableName: true,
     underscored: true,
-    modelName: 'dish',
+    modelName: 'blog',
   }
 );
 
-module.exports = Dish;
+module.exports = Blog;
