@@ -5,6 +5,8 @@ const newFormHandler = async (event) => {
   const needed_funding = document.querySelector('#project-funding').value.trim();
   const description = document.querySelector('#project-desc').value.trim();
 
+
+  //create a new blog
   if (name && needed_funding && description) {
     const response = await fetch(`/api/blogs`, {
       method: 'POST',
@@ -15,13 +17,14 @@ const newFormHandler = async (event) => {
     });
 
     if (response.ok) {
-      document.location.replace('/profile');
+      document.location.replace('/dashboard');
     } else {
       alert('Failed to create blog');
     }
   }
 };
 
+//delete a blog
 const delButtonHandler = async (event) => {
   if (event.target.hasAttribute('data-id')) {
     const id = event.target.getAttribute('data-id');
@@ -31,7 +34,7 @@ const delButtonHandler = async (event) => {
     });
 
     if (response.ok) {
-      document.location.replace('/profile');
+      document.location.replace('/dashboard');
     } else {
       alert('Failed to delete blog');
     }
@@ -43,5 +46,5 @@ document
   .addEventListener('submit', newFormHandler);
 
 document
-  .querySelector('.project-list')
+  .querySelector('.blog-list')
   .addEventListener('click', delButtonHandler);
