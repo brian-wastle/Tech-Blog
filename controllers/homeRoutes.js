@@ -72,6 +72,19 @@ router.get('/dashboard', withAuth, async (req, res) => {
   }
 });
 
+//takes you to the "create new blog" page
+router.get('/newblog', withAuth, async (req, res) => {
+  try {
+
+    // Pass serialized data and session flag into template
+    res.render('newBlog', { 
+      logged_in: req.session.logged_in 
+    });
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
+
 //send user to signup page
 router.get('/signup', (req, res) => {
   // If the user is already logged in, redirect the request to another route

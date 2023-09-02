@@ -1,28 +1,4 @@
-const newFormHandler = async (event) => {
-  event.preventDefault();
 
-  const name = document.querySelector('#project-name').value.trim();
-  const needed_funding = document.querySelector('#project-funding').value.trim();
-  const description = document.querySelector('#project-desc').value.trim();
-
-
-  //create a new blog
-  if (name && needed_funding && description) {
-    const response = await fetch(`/api/blogs`, {
-      method: 'POST',
-      body: JSON.stringify({ name, needed_funding, description }),
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    });
-
-    if (response.ok) {
-      document.location.replace('/dashboard');
-    } else {
-      alert('Failed to create blog');
-    }
-  }
-};
 
 //delete a blog
 const delButtonHandler = async (event) => {
@@ -41,10 +17,24 @@ const delButtonHandler = async (event) => {
   }
 };
 
-document
-  .querySelector('.new-project-form')
-  .addEventListener('submit', newFormHandler);
+//takes you to "create new blog page"
+const createButtonHandler = async () => {
+
+  const response = await fetch('/newblog');
+  
+  if (response.ok) {
+    document.location.replace('/newBlog');
+  } else {
+    alert(response.statusText);
+  }
+  };
+
+
 
 document
   .querySelector('.blog-list')
   .addEventListener('click', delButtonHandler);
+
+  document
+  .querySelector('#createBlog')
+  .addEventListener('click', createButtonHandler);
