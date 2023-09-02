@@ -34,17 +34,18 @@ router.get('/blogs/:id', async (req, res) => {
     const blogData = await Blog.findByPk(req.params.id, {
       include: [
         {
+          
           model: User,
           attributes: ['name'],
         },
       ],
     });
-
     const blog = blogData.get({ plain: true });
-
     res.render('blog', {
       ...blog,
-      logged_in: req.session.logged_in
+      logged_in: req.session.logged_in,
+      user_id: req.session.user_id,
+      author_id: blog.user_id
     });
   } catch (err) {
     res.status(500).json(err);
@@ -75,8 +76,6 @@ router.get('/dashboard', withAuth, async (req, res) => {
 //takes you to the "create new blog" page
 router.get('/newblog', withAuth, async (req, res) => {
   try {
-
-    // Pass serialized data and session flag into template
     res.render('newBlog', { 
       logged_in: req.session.logged_in 
     });
@@ -87,12 +86,10 @@ router.get('/newblog', withAuth, async (req, res) => {
 
 //send user to signup page
 router.get('/signup', (req, res) => {
-  // If the user is already logged in, redirect the request to another route
   if (req.session.logged_in) {
     res.redirect('/dashboard');
     return;
   }
-
   res.render('signup');
 });
 

@@ -24,23 +24,11 @@
 function loginButtonHandler() {
     document.location.replace('/login');
 }
+  
+document
+  .querySelector('.signup-form')
+  .addEventListener('submit', signupFormHandler);
 
-//   const loginButtonHandler = async () => {
-
-//       const response = await fetch('/login');
-  
-//       if (response.ok) {
-//         document.location.replace('/login');
-//       } else {
-//         alert(response.statusText);
-//       }
-    
-//   };
-  
-    document
-        .querySelector('.signup-form')
-        .addEventListener('submit', signupFormHandler);
-  
-    document
-        .querySelector('#login-button')
-        .addEventListener('click', loginButtonHandler);
+document
+  .querySelector('#login-button')
+  .addEventListener('click', loginButtonHandler);

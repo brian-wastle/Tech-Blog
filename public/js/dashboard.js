@@ -17,9 +17,9 @@ const delButtonHandler = async (event) => {
   }
 };
 
-//takes you to "create new blog page"
+// takes you to "create new blog page"
 const createButtonHandler = async () => {
-
+  
   const response = await fetch('/newblog');
   
   if (response.ok) {
@@ -30,11 +30,11 @@ const createButtonHandler = async () => {
   };
 
 
+document
+.querySelector('#createBlog')
+.addEventListener('click', createButtonHandler);
 
 document
   .querySelector('.blog-list')
   .addEventListener('click', delButtonHandler);
 
-  document
-  .querySelector('#createBlog')
-  .addEventListener('click', createButtonHandler);
