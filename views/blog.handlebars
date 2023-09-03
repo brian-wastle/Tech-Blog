@@ -17,17 +17,22 @@
 <div class="row mb-4 project">
   <div>
   {{comment.comment}}
+  {{comment.user_name}}
+  {{comment.user_id}}
   </div>
+  <button class="btn btn-sm btn-danger" id="del-button" data-id="{{comment.id}}">DELETE</button>
+  
 </div>
 {{/each}}  
   
-  {{#verify_author author_id user_id}}
-
-  {{else}}
   
-  {{/verify_author}}
 
 </div>
   <script src="/js/blog.js"></script>
 
 
+{{#verify_author author_id user_id}}
+
+  {{else}}
+  
+  {{/verify_author}}

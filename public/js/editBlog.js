@@ -35,8 +35,7 @@ const delButtonHandler = async (event) => {
     });
 
     if (response.ok) {
-      console.log('ok')
-      // document.location.replace('/dashboard');
+      document.location.replace('/dashboard');
     } else {
       alert('Failed to delete blog');
     }
