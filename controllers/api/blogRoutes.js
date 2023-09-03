@@ -17,15 +17,21 @@ router.post('/', withAuth, async (req, res) => {
 });
 
 //update a blog
-router.put('/edit/:id', async (req, res) => {
+router.put('/edit/:id', withAuth, async (req, res) => {
   try {
-    const blogData = await Blog.update(req.body, {
-      where: {
-        id: req.params.id,
+    const blogData = await Blog.update(
+      {
+        name: req.body.name,
+        description: req.body.description,
+      }, 
+      {
+        where: {
+          id: req.params.id,
+        }
       }
-    });
+    );
 
-    res.status(200).json(blogData);
+    return res.status(200).json(blogData);
   } catch (err) {
     res.status(400).json(err);
   }

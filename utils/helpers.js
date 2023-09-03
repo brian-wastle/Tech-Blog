@@ -9,10 +9,10 @@ module.exports = {
   verify_author: (author, user, options) => {
     // Format date as MM/DD/YYYY
     if (author === user) {
-      console.log('same?');
+      // console.log('same?');
       return options.fn(this);
     }
-    console.log('not the same');
+    // console.log('not the same');
     return options.inverse(this);
   },
 };
