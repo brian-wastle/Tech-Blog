@@ -5,25 +5,25 @@ const newFormHandler = async (event) => {
     const description = document.querySelector('#project-desc').value.trim();
   
   
-    //create a new blog
+    //update a blog
     if (name && description) {
-      const response = await fetch(`/api/blogs`, {
-        method: 'POST',
-        body: JSON.stringify({ name, description }),
+      const response = await fetch(`/api/blogs/:id`, {
+        method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
+        body: JSON.stringify({ name, description }),
         },
       });
   
       if (response.ok) {
         document.location.replace('/dashboard');
       } else {
-        alert('Failed to create blog');
+        alert('Failed to update blog');
       }
     }
   };
 
   
 document
-.querySelector('.new-project-form')
+.querySelector('.edit-project-form')
 .addEventListener('submit', newFormHandler);

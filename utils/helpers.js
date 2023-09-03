@@ -16,4 +16,9 @@ module.exports = {
     return options.inverse(this);
   },
 };
+// {{!-- verifies if the author is the same as the user accessing the blog, and then uses the comment partial, or not --}}
+// {{#verify_author author_id user_id}}
 
+// {{else}}
+
+// {{/verify_author}}

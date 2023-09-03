@@ -52,6 +52,55 @@ router.get('/blogs/:id', async (req, res) => {
   }
 });
 
+//edit a blog from the dashboard, sends to homepage if user is not author
+router.get('/edit/:id', withAuth, async (req, res) => {
+  try {
+    const blogData = await Blog.findByPk(req.params.id, {
+      include: [
+        {
+          
+          model: User,
+          attributes: ['name'],
+        },
+      ],
+    });
+    const blog = blogData.get({ plain: true });
+    if (req.session.user_id == blog.user_id) {
+    res.render('editblog', {
+      ...blog,
+      logged_in: req.session.logged_in,
+      user_id: req.session.user_id,
+      author_id: blog.user_id
+    });
+    } else {
+      try {
+        // Get all projects and JOIN with user data
+        const blogData = await Blog.findAll({
+          include: [
+            {
+              model: User,
+              attributes: ['name'],
+            },
+          ],
+        });
+    
+        // Serialize data so the template can read it
+        const blogs = blogData.map((blog) => blog.get({ plain: true }));
+    
+        // Pass serialized data and session flag into template
+        res.render('homepage', { 
+          blogs, 
+          logged_in: req.session.logged_in 
+        });
+      } catch (err) {
+        res.status(500).json(err);
+      }
+    }
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
+
 //bring up dashboard page, this is main.handlebars when someone clicks on 'dashboard'
 //Use withAuth middleware to prevent access to route
 router.get('/dashboard', withAuth, async (req, res) => {
