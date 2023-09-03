@@ -27,10 +27,21 @@ router.get('/', async (req, res) => {
   }
 });
 
-//gets a single blog with clicked on from homepage
+//gets a single blog when clicked on the homepage
 router.get('/blogs/:id', async (req, res) => {
   try {
-    
+    const user = await User.findOne({
+      where: {
+        id: req.session.user_id,
+      },
+      attributes: ['name'], // Specify the attributes you want to retrieve (in this case, 'name')
+    });
+    console.log('--req.session.user_id--')
+    console.log(req.session.user_id)
+    console.log('--break--')
+    if (user) {
+      var userName = user.uniqno;
+    }
     const blogData = await Blog.findByPk(req.params.id, {
       include: [
         { 
@@ -43,14 +54,20 @@ router.get('/blogs/:id', async (req, res) => {
         }  
       ],
     });
-
     const blog = blogData.get({ plain: true });
+
+
+    console.log('----userName----');
+    console.log(userName);
+    console.log('--break--')
+
+
     res.render('blog', {
       ...blog,
       logged_in: req.session.logged_in,
-      user_id: req.session.user_id,
+      user_name: userName
     });
-    // console.log(blog);
+
   } catch (err) {
     res.status(500).json(err);
   }

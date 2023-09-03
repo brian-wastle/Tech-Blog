@@ -7,7 +7,7 @@ module.exports = {
     return date.toLocaleDateString();
   },
   verify_author: (author, user, options) => {
-    if (author === user) {
+    if (author == user) {
       console.log('same');
       return options.fn(this);
     }

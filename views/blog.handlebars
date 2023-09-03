@@ -11,19 +11,18 @@
     <button type="submit" id="submit-comment">Post a Comment</button>
     </form>
 </section>
-
+{{data_test}}
 {{!-- verifies if the author is the same as the user accessing the blog, and then uses the comment partial, or not --}}
 {{#each comments as |comment| }}
 <div class="row mb-4 project">
   <div>
   {{comment.comment}}
-  {{comment.user_name}}
+  - {{comment.user_name}}
   </div>
-
-  {{!-- {{#verify_author comment.user_id user_id}}
-  {{else}}
+  {{#verify_author comment.user_id ../user_name}}
   <button class="btn btn-sm btn-danger" id="del-button" data-id="{{comment.id}}">DELETE</button>
-  {{/verify_author}} --}}
+  {{else}}
+  {{/verify_author}}
   
 </div>
 {{/each}}  
