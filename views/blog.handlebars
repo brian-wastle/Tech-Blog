@@ -18,9 +18,12 @@
   <div>
   {{comment.comment}}
   {{comment.user_name}}
-  {{comment.user_id}}
   </div>
+
+  {{!-- {{#verify_author comment.user_id user_id}}
+  {{else}}
   <button class="btn btn-sm btn-danger" id="del-button" data-id="{{comment.id}}">DELETE</button>
+  {{/verify_author}} --}}
   
 </div>
 {{/each}}  
@@ -31,8 +34,3 @@
   <script src="/js/blog.js"></script>
 
 
-{{#verify_author author_id user_id}}
-
-  {{else}}
-  
-  {{/verify_author}}

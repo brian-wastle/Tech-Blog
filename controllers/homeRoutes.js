@@ -20,14 +20,14 @@ router.get('/', async (req, res) => {
     // Pass serialized data and session flag into template
     res.render('homepage', { 
       blogs, 
-      logged_in: req.session.logged_in 
+      logged_in: req.session.logged_in,
     });
   } catch (err) {
     res.status(500).json(err);
   }
 });
 
-//gets a single blog with clicked on from dashboard
+//gets a single blog with clicked on from homepage
 router.get('/blogs/:id', async (req, res) => {
   try {
     
@@ -48,8 +48,9 @@ router.get('/blogs/:id', async (req, res) => {
     res.render('blog', {
       ...blog,
       logged_in: req.session.logged_in,
-      user_id: req.session.user_id
+      user_id: req.session.user_id,
     });
+    // console.log(blog);
   } catch (err) {
     res.status(500).json(err);
   }
@@ -73,7 +74,6 @@ router.get('/edit/:id', withAuth, async (req, res) => {
       blog_id: blog.id,
       logged_in: req.session.logged_in,
       user_id: req.session.user_id,
-      author_id: blog.user_id
     });
     } else {
       try {
