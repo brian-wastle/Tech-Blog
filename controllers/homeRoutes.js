@@ -15,9 +15,7 @@ router.get('/', async (req, res) => {
       ],
     });
 
-    // Serialize data so the template can read it
     const blogs = blogData.map((blog) => blog.get({ plain: true }));
-    // Pass serialized data and session flag into template
     res.render('homepage', { 
       blogs, 
       logged_in: req.session.logged_in,
@@ -30,18 +28,25 @@ router.get('/', async (req, res) => {
 //gets a single blog when clicked on the homepage
 router.get('/blogs/:id', async (req, res) => {
   try {
-    const user = await User.findOne({
+    if (req.session.user_id) {
+    var user = await User.findOne({
       where: {
         id: req.session.user_id,
       },
-      attributes: ['name'], // Specify the attributes you want to retrieve (in this case, 'name')
+      attributes: ['name', 'id'], 
     });
-    console.log('--req.session.user_id--')
-    console.log(req.session.user_id)
-    console.log('--break--')
-    if (user) {
-      var userName = user.uniqno;
+    } else {
+      var user;
     }
+
+
+
+    if (user) {
+      var currentUserId = user.dataValues.id;
+    } else {
+      var currentUserId = 0;
+    }
+
     const blogData = await Blog.findByPk(req.params.id, {
       include: [
         { 
@@ -50,22 +55,16 @@ router.get('/blogs/:id', async (req, res) => {
         }, 
         { 
           model: Comment,
-          attributes: ['id', 'comment', 'user_id', 'user_name']
+          attributes: ['id', 'comment', 'user_id', 'user_name', 'date_created']
         }  
       ],
     });
     const blog = blogData.get({ plain: true });
 
-
-    console.log('----userName----');
-    console.log(userName);
-    console.log('--break--')
-
-
     res.render('blog', {
       ...blog,
       logged_in: req.session.logged_in,
-      user_name: userName
+      current_user_id: currentUserId
     });
 
   } catch (err) {

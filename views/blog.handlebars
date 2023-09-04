@@ -1,4 +1,4 @@
-<div class="text-center">
+<div class="text-left">
   <h2>{{name}}</h2>
   <p>{{description}}</p>
   <p>Created by {{user.name}} on {{format_date date_created}}</p>
@@ -15,15 +15,19 @@
 {{!-- verifies if the author is the same as the user accessing the blog, and then uses the comment partial, or not --}}
 {{#each comments as |comment| }}
 <div class="row mb-4 project">
-  <div>
+  <div class="comment">
   {{comment.comment}}
-  - {{comment.user_name}}
+  <br><br>
+    <div class="username">
+    - {{comment.user_name}} on {{format_date comment.date_created}}
+    </div>
   </div>
-  {{#verify_author comment.user_id ../user_name}}
-  <button class="btn btn-sm btn-danger" id="del-button" data-id="{{comment.id}}">DELETE</button>
+  {{#verify_author comment.user_id ../current_user_id}}
+  <button class="btn btn-sm btn-light" id="del-button" data-id="{{comment.id}}">DELETE</button>
+
   {{else}}
   {{/verify_author}}
-  
+
 </div>
 {{/each}}  
   

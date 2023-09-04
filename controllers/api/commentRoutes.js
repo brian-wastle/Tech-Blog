@@ -11,18 +11,24 @@ router.post('/:id', async (req, res) => {
       where: {
         id: req.session.user_id,
       },
-      attributes: ['name'], // Specify the attributes you want to retrieve (in this case, 'name')
+      attributes: ['name', 'id'], // Specify the attributes you want to retrieve (in this case, 'name')
     });
 
     if (user) {
-      var userName = user.name;
+      var currentUserId = user.dataValues.id;
+      var currentUserName = user.dataValues.name;
+    } else {
+      var currentUserId = 0;
+      var currentUserName = '';
     }
     const newComment = await Comment.create({
       ...req.body,
       blog_id: req.params.id,
       user_id: req.session.user_id,
-      user_name: userName
+      user_name: currentUserName,
+      user_id: currentUserId
     });
+    console.log(user)
       res.status(200).json(newComment);
     } catch (err) {
       res.status(400).json(err);
