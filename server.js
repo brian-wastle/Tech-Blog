@@ -17,7 +17,7 @@ const hbs = exphbs.create({ helpers });
 const sess = {
   secret: 'blaring trumpets',
   cookie: {
-    //saves session for 5 mins * 12 for 1 hour total during dev
+    //saves session for 5 mins * 12 for 1 hour total
     maxAge: 300000 * 12,
     httpOnly: true,
     secure: false,
